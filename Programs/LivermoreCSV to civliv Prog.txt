@@ -1,0 +1,196 @@
+library(MASS)
+library(rms)
+library(plyr)
+
+civ<-read.csv("F:\\PAR\\PAR-master\\data\\LIVRMORE.csv",skip=17, nrows=63, header=FALSE,
+	col.names=c("num", "Battle", "sdate", "edate", "NAMA", "ac", "STRA", "KIAA", "WIAA", "KWA", "MPOWA",
+	"STRD", "KIAD", "WIAD", "KWD", "MPOWD", "wc", "winner"))
+
+
+civ<-subset(civ, 
+	Battle !='APPOMATOX CAMPAIGN' &
+	Battle !='ATLANTA CAMPAIGN' &
+	Battle !='MANASSAS & CHANTILLY' &
+	Battle !='PEACH ORCHARD, SAVAGE STATION, WHITE OAK SWAMP, MALVERN HILL' &
+	Battle !="SEVEN DAY'S BATTLES")
+
+
+civu<-subset(civ,NAMA=="UNION")
+civc<-subset(civ,NAMA=="CONFEDERATE")
+
+civu$u_strength<-	civu$STRA
+civu$u_l1<-		civu$KIAA
+civu$u_l2<-		civu$WIAA
+civu$u_l3<-		civu$KWA
+civu$u_l4<-		civu$MPOWA
+civu$c_strength<-	civu$STRD
+civu$c_l1<-		civu$KIAD
+civu$c_l2<-		civu$WIAD
+civu$c_l3<-		civu$KWD
+civu$c_l4<-		civu$MPOWD
+
+civc$u_strength<-	civc$STRD
+civc$u_l1<-		civc$KIAD
+civc$u_l2<-		civc$WIAD
+civc$u_l3<-		civc$KWD
+civc$u_l4<-		civc$MPOWD
+civc$c_strength<-	civc$STRA
+civc$c_l1<-		civc$KIAA
+civc$c_l2<-		civc$WIAA
+civc$c_l3<-		civc$KWA
+civc$c_l4<-		civc$MPOWA
+
+civ2<-subset(rbind(civu,civc), select=c(Battle, u_strength, u_l1, u_l2, u_l3, u_l4, c_strength, c_l1, c_l2, c_l3, c_l4))
+
+# NOTE 1: When the number of KIA is not separately available, the values under WIA are KIA + WIA.
+# Therefore when KIA is missing, erase the wounded (l2) so that numbers aren't double counted in the sum
+
+civ2$u_l2[is.na(civ2$u_l1) & !is.na(civ2$u_l2)]<-NA 
+civ2$c_l2[is.na(civ2$c_l1) & !is.na(civ2$c_l2)]<-NA
+
+# If killed and wounded are nonmissing, erase killed + wounded
+# So numbers can add up in a straight sum
+civ2$u_l3[!is.na(civ2$u_l1) & !is.na(civ2$u_l2)]<-NA 
+civ2$c_l3[!is.na(civ2$c_l1) & !is.na(civ2$c_l2)]<-NA
+
+# Mark 
+civ2$u_type1<-ifelse(!is.na(civ2$u_l1),'k',NA) 
+civ2$u_type2<-ifelse(!is.na(civ2$u_l2),'w',NA) 
+civ2$u_type3<-ifelse(!is.na(civ2$u_l3),'kw',NA) 
+civ2$u_type4<-ifelse(!is.na(civ2$u_l4),'mc',NA) 
+
+civ2$c_type1<-ifelse(!is.na(civ2$c_l1),'k',NA) 
+civ2$c_type2<-ifelse(!is.na(civ2$c_l2),'w',NA) 
+civ2$c_type3<-ifelse(!is.na(civ2$c_l3),'kw',NA) 
+civ2$c_type4<-ifelse(!is.na(civ2$c_l4),'mc',NA) 
+
+civ2
+
+# Fix battle of Jonesborough
+jones1<-subset(civ2, Battle %in% c('JONESBORO, GA I', 'JONESBORO, GA II'))
+jones<-data.frame("Jonesborough")
+colnames(jones)<-"Battle"
+jones$u_strength<-max(jones1$u_strength)
+jones$c_strength<-max(jones1$c_strength)
+jones$u_l1<-sum(jones1$u_l1, jones1$u_l2, jones1$u_l3, na.rm=TRUE)
+jones$u_type1<-'kw'
+jones$u_l2<-sum(jones1$u_l4, na.rm=TRUE)
+jones$u_type2<-'mc'
+jones$c_l1<-sum(jones1$c_l3, na.rm=TRUE)
+jones$c_type1<-'kw'
+
+civ2<-subset(civ2, Battle !='JONESBORO, GA I' & Battle !='JONESBORO, GA II')
+civ2<-rbind.fill(civ2,jones)
+
+
+# Fix Port Hudson
+hud1<-subset(civ2, Battle %in% c('PORT HUDSON I', 'PORT HUDSON II'))
+hud<-data.frame("PORT HUDSON")
+colnames(hud)<-"Battle"
+hud$u_strength<-max(hud1$u_strength)
+hud$c_strength<-max(hud1$c_strength)
+hud$u_l1<-sum(hud1$u_l1, na.rm=TRUE)
+hud$u_type1<-'k'
+hud$u_l2<-sum(hud1$u_l2, na.rm=TRUE)
+hud$u_type2<-'w'
+hud$u_l3<-sum(hud1$u_l4, na.rm=TRUE)
+hud$u_type3<-'mc'
+hud$c_l1<-sum(hud1$c_l1, hud1$c_l2, hud1$c_l3, na.rm=TRUE)
+hud$c_type1<-'kw'
+
+civ2<-subset(civ2, Battle !='PORT HUDSON I' & Battle !='PORT HUDSON II')
+civ2<-rbind.fill(civ2,hud)
+
+
+
+
+# Fix Spotsylvania
+spot1<-subset(civ2, Battle %in% c('SPOTTSYLVANIA I', 'SPOTTSYLVANIA II'))
+spot<-data.frame("SPOTTSYLVANIA")
+colnames(spot)<-"Battle"
+spot$u_l1<-sum(spot1$u_l1, spot1$u_l2, spot1$u_l3, na.rm=TRUE)
+spot$u_type1<-'kw'
+spot$u_l2<-sum(hud1$u_l4, na.rm=TRUE)
+spot$u_type2<-'mc'
+
+civ2<-subset(civ2, Battle !='SPOTTSYLVANIA I' & Battle !='SPOTTSYLVANIA II')
+civ2<-rbind.fill(civ2,spot)
+
+#civ3 <- civ2[order(civ2$Battle),]
+
+
+civ2$battle[civ2$Battle=='PEA RIDGE']<-'AR001'
+civ2$battle[civ2$Battle=='PRAIRIE GROVE, ARK']<-'AR005'
+civ2$battle[civ2$Battle=='ARKANSAS POST']<-'AR006'
+civ2$battle[civ2$Battle=='OLUSTEE, FLA']<-'FL005'
+civ2$battle[civ2$Battle=='CHICKAMAUGA']<-'GA004'
+civ2$battle[civ2$Battle=='KENESAW MOUNTAIN']<-'GA015'
+civ2$battle[civ2$Battle=='PEACH TREE CREEK']<-'GA016'
+civ2$battle[civ2$Battle=='ATLANTA']<-'GA017'
+civ2$battle[civ2$Battle=='EZRA CHURCH (ATLANTA)']<-'GA018'
+civ2$battle[civ2$Battle=='Jonesborough']<-'GA022'
+civ2$battle[civ2$Battle=='RICHMOND, KY']<-'KY007'
+civ2$battle[civ2$Battle=='PERRYVILLE']<-'KY009'
+civ2$battle[civ2$Battle=='PORT HUDSON']<-'LA010'
+civ2$battle[civ2$Battle=='PLEASANT HILL']<-'LA019'
+civ2$battle[civ2$Battle=='SOUTH MOUNTAIN']<-'MD002'
+civ2$battle[civ2$Battle=='ANTIETAM']<-'MD003'
+civ2$battle[civ2$Battle=="WILSON'S CREEK"]<-'MO004'
+civ2$battle[civ2$Battle=='CORINTH']<-'MS002'
+civ2$battle[civ2$Battle=='CHICKASAW BAYOU AND BLUFF']<-'MS003'
+civ2$battle[civ2$Battle=="CHAMPION'S HILL"]<-'MS009'
+civ2$battle[civ2$Battle=='VICKSBURG']<-'MS011'
+civ2$battle[civ2$Battle=='TUPELO, MISS']<-'MS015'
+civ2$battle[civ2$Battle=='BENTONVILLE']<-'NC020'
+civ2$battle[civ2$Battle=='GETTYSBURG']<-'PA002'
+civ2$battle[civ2$Battle=='FORT WAGNER']<-'SC007'
+civ2$battle[civ2$Battle=='FORT DONELSON']<-'TN002'
+civ2$battle[civ2$Battle=='SHILOH']<-'TN003'
+civ2$battle[civ2$Battle=="STONE'S RIVER"]<-'TN010'
+civ2$battle[civ2$Battle=='CHATTANOOGA']<-'TN024'
+civ2$battle[civ2$Battle=='FRANKLIN']<-'TN036'
+civ2$battle[civ2$Battle=='NASHVILLE']<-'TN038'
+civ2$battle[civ2$Battle=='BULL RUN']<-'VA005'
+civ2$battle[civ2$Battle=='WILLIAMSBURG']<-'VA010'
+civ2$battle[civ2$Battle=='FAIR OAKS']<-'VA014'
+civ2$battle[civ2$Battle=='MECHANICSVILLE']<-'VA016'
+civ2$battle[civ2$Battle=="GAINES' MILL"]<-'VA017'
+civ2$battle[civ2$Battle=='CEDAR MOUNTAIN']<-'VA022'
+civ2$battle[civ2$Battle=='FREDERICKSBURG']<-'VA028'
+civ2$battle[civ2$Battle=='CHANCELLORSVILLE & FREDERICKSBURG']<-'VA032'
+civ2$battle[civ2$Battle=='MINE RUN']<-'VA044'
+civ2$battle[civ2$Battle=='WILDERNESS']<-'VA046'
+civ2$battle[civ2$Battle=='SPOTTSYLVANIA']<-'VA048'
+civ2$battle[civ2$Battle=="DREWRY'S BLUFF"]<-'VA053'
+civ2$battle[civ2$Battle=='COLD HARBOR']<-'VA062'
+civ2$battle[civ2$Battle=='PETERSBURG II']<-'VA063'
+civ2$battle[civ2$Battle=='THE MINE']<-'VA070'
+civ2$battle[civ2$Battle=='DEEP BOTTOM']<-'VA071'
+civ2$battle[civ2$Battle=='WELDON RAILROAD']<-'VA072'
+civ2$battle[civ2$Battle=="CHAFFIN'S FARM AND FORTS HARRISON AND GILMER"]<-'VA075'
+civ2$battle[civ2$Battle=='BOYDTON PLANK ROAD']<-'VA079'
+civ2$battle[civ2$Battle=="HATCHER'S RUN"]<-'VA083'
+civ2$battle[civ2$Battle=='DINWIDDIE COURTHOUSE AND WHITE OAK ROAD']<-'VA086'
+civ2$battle[civ2$Battle=='PETERSBURG']<-'VA089'
+civ2$battle[civ2$Battle=='WINCHESTER (OPEQUAN)']<-'VA119'
+civ2$battle[civ2$Battle=='CEDAR CREEK']<-'VA122'
+
+  
+civ2$suffix<-'liv'
+civ2$source<-'livermore'
+
+civ2$strength_US_liv<-civ2$u_strength
+civ2$strength_CS_liv<-civ2$c_strength
+
+civ2$casualties_US_liv<-NA
+civ2$casualties_CS_liv<-NA
+
+civ2$casualties_US_liv[civ2$u_type1 %in% c('k', 'w', 'kw')]<-rowSums(civ2[civ2$u_type1 %in% c('k', 'w', 'kw'),c('casualties_US_liv','u_l1')], na.rm=TRUE)
+civ2$casualties_US_liv[civ2$u_type2 %in% c('k', 'w', 'kw')]<-rowSums(civ2[civ2$u_type2 %in% c('k', 'w', 'kw'),c('casualties_US_liv','u_l2')], na.rm=TRUE)
+civ2$casualties_US_liv[civ2$u_type3 %in% c('k', 'w', 'kw')]<-rowSums(civ2[civ2$u_type3 %in% c('k', 'w', 'kw'),c('casualties_US_liv','u_l3')], na.rm=TRUE)
+civ2$casualties_US_liv[civ2$u_type4 %in% c('k', 'w', 'kw')]<-rowSums(civ2[civ2$u_type4 %in% c('k', 'w', 'kw'),c('casualties_US_liv','u_l4')], na.rm=TRUE)
+
+civ2$casualties_CS_liv[civ2$c_type1 %in% c('k', 'w', 'kw')]<-rowSums(civ2[civ2$c_type1 %in% c('k', 'w', 'kw'),c('casualties_CS_liv','c_l1')], na.rm=TRUE)
+civ2$casualties_CS_liv[civ2$c_type2 %in% c('k', 'w', 'kw')]<-rowSums(civ2[civ2$c_type2 %in% c('k', 'w', 'kw'),c('casualties_CS_liv','c_l2')], na.rm=TRUE)
+civ2$casualties_CS_liv[civ2$c_type3 %in% c('k', 'w', 'kw')]<-rowSums(civ2[civ2$c_type3 %in% c('k', 'w', 'kw'),c('casualties_CS_liv','c_l3')], na.rm=TRUE)
+civ2$casualties_CS_liv[civ2$c_type4 %in% c('k', 'w', 'kw')]<-rowSums(civ2[civ2$c_type4 %in% c('k', 'w', 'kw'),c('casualties_CS_liv','c_l4')], na.rm=TRUE)
