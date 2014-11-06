@@ -2,7 +2,8 @@ library(MASS)
 library(rms)
 library(plyr)
 
-civ<-read.csv("F:\\PAR\\PAR-master\\data\\LIVRMORE.csv",skip=17, nrows=63, header=FALSE,
+# Change input file address
+civ<-read.csv("C:\\Users\\alan\\Documents\\GitHub\\Stuff\\Input Data\\LIVRMORE.csv",skip=17, nrows=63, header=FALSE,
 	col.names=c("num", "Battle", "sdate", "edate", "NAMA", "ac", "STRA", "KIAA", "WIAA", "KWA", "MPOWA",
 	"STRD", "KIAD", "WIAD", "KWD", "MPOWD", "wc", "winner"))
 
@@ -108,6 +109,7 @@ civ2<-rbind.fill(civ2,hud)
 spot1<-subset(civ2, Battle %in% c('SPOTTSYLVANIA I', 'SPOTTSYLVANIA II'))
 spot<-data.frame("SPOTTSYLVANIA")
 colnames(spot)<-"Battle"
+spot$u_strength<-max(spot1$u_strength)
 spot$u_l1<-sum(spot1$u_l1, spot1$u_l2, spot1$u_l3, na.rm=TRUE)
 spot$u_type1<-'kw'
 spot$u_l2<-sum(hud1$u_l4, na.rm=TRUE)
@@ -163,7 +165,7 @@ civ2$battle[civ2$Battle=='WILDERNESS']<-'VA046'
 civ2$battle[civ2$Battle=='SPOTTSYLVANIA']<-'VA048'
 civ2$battle[civ2$Battle=="DREWRY'S BLUFF"]<-'VA053'
 civ2$battle[civ2$Battle=='COLD HARBOR']<-'VA062'
-civ2$battle[civ2$Battle=='PETERSBURG II']<-'VA063'
+civ2$battle[civ2$Battle=='PETERSBURG']<-'VA063'
 civ2$battle[civ2$Battle=='THE MINE']<-'VA070'
 civ2$battle[civ2$Battle=='DEEP BOTTOM']<-'VA071'
 civ2$battle[civ2$Battle=='WELDON RAILROAD']<-'VA072'
@@ -171,7 +173,7 @@ civ2$battle[civ2$Battle=="CHAFFIN'S FARM AND FORTS HARRISON AND GILMER"]<-'VA075
 civ2$battle[civ2$Battle=='BOYDTON PLANK ROAD']<-'VA079'
 civ2$battle[civ2$Battle=="HATCHER'S RUN"]<-'VA083'
 civ2$battle[civ2$Battle=='DINWIDDIE COURTHOUSE AND WHITE OAK ROAD']<-'VA086'
-civ2$battle[civ2$Battle=='PETERSBURG']<-'VA089'
+civ2$battle[civ2$Battle=='PETERSBURG II']<-'VA089'
 civ2$battle[civ2$Battle=='WINCHESTER (OPEQUAN)']<-'VA119'
 civ2$battle[civ2$Battle=='CEDAR CREEK']<-'VA122'
 
@@ -194,3 +196,14 @@ civ2$casualties_CS_liv[civ2$c_type1 %in% c('k', 'w', 'kw')]<-rowSums(civ2[civ2$c
 civ2$casualties_CS_liv[civ2$c_type2 %in% c('k', 'w', 'kw')]<-rowSums(civ2[civ2$c_type2 %in% c('k', 'w', 'kw'),c('casualties_CS_liv','c_l2')], na.rm=TRUE)
 civ2$casualties_CS_liv[civ2$c_type3 %in% c('k', 'w', 'kw')]<-rowSums(civ2[civ2$c_type3 %in% c('k', 'w', 'kw'),c('casualties_CS_liv','c_l3')], na.rm=TRUE)
 civ2$casualties_CS_liv[civ2$c_type4 %in% c('k', 'w', 'kw')]<-rowSums(civ2[civ2$c_type4 %in% c('k', 'w', 'kw'),c('casualties_CS_liv','c_l4')], na.rm=TRUE)
+
+
+civliv<-civ2[,c("battle", "source", 
+	"u_strength", "u_l1", "u_l2", "u_l3", "u_l4", "u_type1", "u_type2", "u_type3", "u_type4",
+	"c_strength", "c_l1", "c_l2", "c_l3", "c_l4", "c_type1", "c_type2", "c_type3", "c_type4",
+	"strength_US_liv", "strength_CS_liv", "casualties_US_liv", "casualties_CS_liv")]	 
+ 	 
+
+
+
+write.csv(civliv, file = "C:\\Users\\alan\\Documents\\GitHub\\Stuff\\Output Data\\civliv.csv")
