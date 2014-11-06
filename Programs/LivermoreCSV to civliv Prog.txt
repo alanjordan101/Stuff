@@ -1,9 +1,13 @@
 library(MASS)
 library(rms)
 library(plyr)
+library(RCurl)
 
-# Change input file address
-civ<-read.csv("C:\\Users\\alan\\Documents\\GitHub\\Stuff\\Input Data\\LIVRMORE.csv",skip=17, nrows=63, header=FALSE,
+
+
+
+x <- getURL("https://raw.githubusercontent.com/jrnold/PAR/master/data/LIVRMORE.csv",ssl.verifypeer = FALSE)
+civ<-read.csv(text=x,skip=17, nrows=63, header=FALSE,
 	col.names=c("num", "Battle", "sdate", "edate", "NAMA", "ac", "STRA", "KIAA", "WIAA", "KWA", "MPOWA",
 	"STRD", "KIAD", "WIAD", "KWD", "MPOWD", "wc", "winner"))
 
@@ -19,29 +23,29 @@ civ<-subset(civ,
 civu<-subset(civ,NAMA=="UNION")
 civc<-subset(civ,NAMA=="CONFEDERATE")
 
-civu$u_strength<-	civu$STRA
+civu$u_effectives<-	civu$STRA
 civu$u_l1<-		civu$KIAA
 civu$u_l2<-		civu$WIAA
 civu$u_l3<-		civu$KWA
 civu$u_l4<-		civu$MPOWA
-civu$c_strength<-	civu$STRD
+civu$c_effectives<-	civu$STRD
 civu$c_l1<-		civu$KIAD
 civu$c_l2<-		civu$WIAD
 civu$c_l3<-		civu$KWD
 civu$c_l4<-		civu$MPOWD
 
-civc$u_strength<-	civc$STRD
+civc$u_effectives<-	civc$STRD
 civc$u_l1<-		civc$KIAD
 civc$u_l2<-		civc$WIAD
 civc$u_l3<-		civc$KWD
 civc$u_l4<-		civc$MPOWD
-civc$c_strength<-	civc$STRA
+civc$c_effectives<-	civc$STRA
 civc$c_l1<-		civc$KIAA
 civc$c_l2<-		civc$WIAA
 civc$c_l3<-		civc$KWA
 civc$c_l4<-		civc$MPOWA
 
-civ2<-subset(rbind(civu,civc), select=c(Battle, u_strength, u_l1, u_l2, u_l3, u_l4, c_strength, c_l1, c_l2, c_l3, c_l4))
+civ2<-subset(rbind(civu,civc), select=c(Battle, u_effectives, u_l1, u_l2, u_l3, u_l4, c_effectives, c_l1, c_l2, c_l3, c_l4))
 
 # NOTE 1: When the number of KIA is not separately available, the values under WIA are KIA + WIA.
 # Therefore when KIA is missing, erase the wounded (l2) so that numbers aren't double counted in the sum
@@ -71,8 +75,8 @@ civ2
 jones1<-subset(civ2, Battle %in% c('JONESBORO, GA I', 'JONESBORO, GA II'))
 jones<-data.frame("Jonesborough")
 colnames(jones)<-"Battle"
-jones$u_strength<-max(jones1$u_strength)
-jones$c_strength<-max(jones1$c_strength)
+jones$u_effectives<-max(jones1$u_effectives)
+jones$c_effectives<-max(jones1$c_effectives)
 jones$u_l1<-sum(jones1$u_l1, jones1$u_l2, jones1$u_l3, na.rm=TRUE)
 jones$u_type1<-'kw'
 jones$u_l2<-sum(jones1$u_l4, na.rm=TRUE)
@@ -88,8 +92,8 @@ civ2<-rbind.fill(civ2,jones)
 hud1<-subset(civ2, Battle %in% c('PORT HUDSON I', 'PORT HUDSON II'))
 hud<-data.frame("PORT HUDSON")
 colnames(hud)<-"Battle"
-hud$u_strength<-max(hud1$u_strength)
-hud$c_strength<-max(hud1$c_strength)
+hud$u_effectives<-max(hud1$u_effectives)
+hud$c_effectives<-max(hud1$c_effectives)
 hud$u_l1<-sum(hud1$u_l1, na.rm=TRUE)
 hud$u_type1<-'k'
 hud$u_l2<-sum(hud1$u_l2, na.rm=TRUE)
@@ -109,7 +113,7 @@ civ2<-rbind.fill(civ2,hud)
 spot1<-subset(civ2, Battle %in% c('SPOTTSYLVANIA I', 'SPOTTSYLVANIA II'))
 spot<-data.frame("SPOTTSYLVANIA")
 colnames(spot)<-"Battle"
-spot$u_strength<-max(spot1$u_strength)
+spot$u_effectives<-max(spot1$u_effectives)
 spot$u_l1<-sum(spot1$u_l1, spot1$u_l2, spot1$u_l3, na.rm=TRUE)
 spot$u_type1<-'kw'
 spot$u_l2<-sum(hud1$u_l4, na.rm=TRUE)
@@ -181,8 +185,8 @@ civ2$battle[civ2$Battle=='CEDAR CREEK']<-'VA122'
 civ2$suffix<-'liv'
 civ2$source<-'livermore'
 
-civ2$strength_US_liv<-civ2$u_strength
-civ2$strength_CS_liv<-civ2$c_strength
+civ2$strength_US_liv<-civ2$u_effectives
+civ2$strength_CS_liv<-civ2$c_effectives
 
 civ2$casualties_US_liv<-NA
 civ2$casualties_CS_liv<-NA
@@ -199,11 +203,12 @@ civ2$casualties_CS_liv[civ2$c_type4 %in% c('k', 'w', 'kw')]<-rowSums(civ2[civ2$c
 
 
 civliv<-civ2[,c("battle", "source", 
-	"u_strength", "u_l1", "u_l2", "u_l3", "u_l4", "u_type1", "u_type2", "u_type3", "u_type4",
-	"c_strength", "c_l1", "c_l2", "c_l3", "c_l4", "c_type1", "c_type2", "c_type3", "c_type4",
-	"strength_US_liv", "strength_CS_liv", "casualties_US_liv", "casualties_CS_liv")]	 
+	"u_effectives", "u_l1", "u_l2", "u_l3", "u_l4", "u_type1", "u_type2", "u_type3", "u_type4",
+	"c_effectives", "c_l1", "c_l2", "c_l3", "c_l4", "c_type1", "c_type2", "c_type3", "c_type4")]	 
  	 
+testliv<-civ2[,c("battle", "source", "strength_US_liv", "strength_CS_liv", "casualties_US_liv", "casualties_CS_liv")]	
 
 
+write.csv(civliv, file = "C:\\Users\\alan\\Documents\\GitHub\\Stuff\\Bucket\\civliv.csv")
+write.csv(testliv, file = "C:\\Users\\alan\\Documents\\GitHub\\Stuff\\testliv2014-11-06.csv")
 
-write.csv(civliv, file = "C:\\Users\\alan\\Documents\\GitHub\\Stuff\\Output Data\\civliv.csv")
