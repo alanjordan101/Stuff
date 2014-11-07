@@ -201,12 +201,12 @@ civ2$casualties_CS_liv[civ2$c_type2 %in% c('k', 'w', 'kw')]<-rowSums(civ2[civ2$c
 civ2$casualties_CS_liv[civ2$c_type3 %in% c('k', 'w', 'kw')]<-rowSums(civ2[civ2$c_type3 %in% c('k', 'w', 'kw'),c('casualties_CS_liv','c_l3')], na.rm=TRUE)
 civ2$casualties_CS_liv[civ2$c_type4 %in% c('k', 'w', 'kw')]<-rowSums(civ2[civ2$c_type4 %in% c('k', 'w', 'kw'),c('casualties_CS_liv','c_l4')], na.rm=TRUE)
 
-
-civliv<-civ2[,c("battle", "source", 
+civ2$Battle_source<-civ2$Battle
+civliv<-civ2[,c("battle", "source", "Battle_source",
 	"u_effectives", "u_l1", "u_l2", "u_l3", "u_l4", "u_type1", "u_type2", "u_type3", "u_type4",
 	"c_effectives", "c_l1", "c_l2", "c_l3", "c_l4", "c_type1", "c_type2", "c_type3", "c_type4")]	 
  	 
-testliv<-civ2[,c("battle", "source", "strength_US_liv", "strength_CS_liv", "casualties_US_liv", "casualties_CS_liv")]	
+testliv<-civ2[,c("battle", "source", "Battle_source", "strength_US_liv", "strength_CS_liv", "casualties_US_liv", "casualties_CS_liv")]	
 
 
 write.csv(civliv, file = "C:\\Users\\alan\\Documents\\GitHub\\Stuff\\Bucket\\civliv.csv")
