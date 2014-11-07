@@ -1,56 +1,56 @@
-"","battle","source","u_effectives","u_l1","u_l2","u_l3","u_l4","u_type1","u_type2","u_type3","u_type4","c_effectives","c_l1","c_l2","c_l3","c_l4","c_type1","c_type2","c_type3","c_type4"
-"1","VA005","livermore",28452,481,1011,NA,1216,"k","w",NA,"mc",32232,387,1582,NA,12,"k","w",NA,"mc"
-"2","MO004","livermore",5400,223,721,NA,291,"k","w",NA,"mc",11600,257,900,NA,27,"k","w",NA,"mc"
-"3","TN002","livermore",27000,500,2108,NA,224,"k","w",NA,"mc",21000,NA,NA,2000,14623,NA,NA,"kw","mc"
-"4","VA010","livermore",40768,456,1410,NA,373,"k","w",NA,"mc",31823,NA,NA,1570,133,NA,NA,"kw","mc"
-"5","VA022","livermore",8030,314,1445,NA,594,"k","w",NA,"mc",16868,231,1107,NA,NA,"k","w",NA,NA
-"6","MD002","livermore",28480,325,1403,NA,85,"k","w",NA,"mc",17852,325,1560,NA,800,"k","w",NA,"mc"
-"7","MD003","livermore",75316,2108,9549,NA,753,"k","w",NA,"mc",51844,2700,9024,NA,2000,"k","w",NA,"mc"
-"8","KY009","livermore",36940,845,2851,NA,515,"k","w",NA,"mc",16000,510,2635,NA,251,"k","w",NA,"mc"
-"9","VA028","livermore",106007,1284,9600,NA,1769,"k","w",NA,"mc",72497,595,4061,NA,653,"k","w",NA,"mc"
-"10","MS003","livermore",30720,208,1005,NA,563,"k","w",NA,"mc",13792,63,134,NA,10,"k","w",NA,"mc"
-"11","AR006","livermore",28944,134,898,NA,29,"k","w",NA,"mc",4564,28,81,NA,4791,"k","w",NA,"mc"
-"12","VA032","livermore",97382,1575,9594,NA,5676,"k","w",NA,"mc",57352,1665,9081,NA,2018,"k","w",NA,"mc"
-"13","MS009","livermore",29373,410,1844,NA,187,"k","w",NA,"mc",20000,381,1800,NA,1670,"k","w",NA,"mc"
-"14","MS011","livermore",45556,502,2550,NA,147,"k","w",NA,"mc",22301,NA,NA,6240,NA,NA,NA,"kw",NA
-"15","SC007","livermore",5264,246,880,NA,389,"k","w",NA,"mc",1785,36,133,NA,5,"k","w",NA,"mc"
-"16","TN024","livermore",56359,753,4722,NA,349,"k","w",NA,"mc",46165,361,2160,NA,4146,"k","w",NA,"mc"
-"17","VA044","livermore",69643,173,1099,NA,381,"k","w",NA,"mc",44426,110,570,NA,65,"k","w",NA,"mc"
-"18","LA019","livermore",12647,150,844,NA,375,"k","w",NA,"mc",14300,NA,NA,1000,500,NA,NA,"kw","mc"
-"19","VA046","livermore",101895,2246,12037,NA,3383,"k","w",NA,"mc",61025,NA,NA,7750,NA,NA,NA,"kw",NA
-"20","VA053","livermore",15800,390,2380,NA,1390,"k","w",NA,"mc",18025,NA,NA,2860,210,NA,NA,"kw","mc"
-"21","VA062","livermore",107907,NA,NA,12000,NA,NA,NA,"kw",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
-"22","VA063","livermore",63797,NA,NA,8150,NA,NA,NA,"kw",NA,41499,NA,NA,NA,NA,NA,NA,NA,NA
-"23","GA015","livermore",16225,NA,NA,1999,52,NA,NA,"kw","mc",17733,NA,NA,270,172,NA,NA,"kw","mc"
-"24","VA070","livermore",20708,NA,NA,2864,929,NA,NA,"kw","mc",11466,NA,NA,NA,NA,NA,NA,NA,NA
-"25","VA071","livermore",27974,328,1852,NA,721,"k","w",NA,"mc",20008,NA,NA,NA,NA,NA,NA,NA,NA
-"26","VA072","livermore",20289,198,1105,NA,3152,"k","w",NA,"mc",14787,NA,NA,1200,419,NA,NA,"kw","mc"
-"27","VA119","livermore",37711,697,3983,NA,338,"k","w",NA,"mc",17103,276,1827,NA,1818,"k","w",NA,"mc"
-"28","VA075","livermore",19639,383,2299,NA,645,"k","w",NA,"mc",10836,NA,NA,NA,NA,NA,NA,NA,NA
-"29","VA079","livermore",42823,166,1028,NA,564,"k","w",NA,"mc",20324,NA,NA,NA,NA,NA,NA,NA,NA
-"30","TN038","livermore",49773,387,2562,NA,112,"k","w",NA,"mc",23207,NA,NA,NA,4462,NA,NA,NA,"mc"
-"31","VA083","livermore",34517,170,1160,NA,182,"k","w",NA,"mc",13835,NA,NA,NA,NA,NA,NA,NA,NA
-"32","VA086","livermore",45247,NA,NA,2198,583,NA,NA,"kw","mc",20030,NA,NA,NA,NA,NA,NA,NA,NA
-"33","VA089","livermore",63299,625,3189,NA,326,"k","w",NA,"mc",18576,NA,NA,NA,NA,NA,NA,NA,NA
-"34","AR001","livermore",11250,203,980,NA,201,"k","w",NA,"mc",14000,NA,NA,600,200,NA,NA,"kw","mc"
-"35","TN003","livermore",62682,1754,8408,NA,2885,"k","w",NA,"mc",40335,1723,8012,NA,959,"k","w",NA,"mc"
-"36","VA014","livermore",41797,790,3594,NA,647,"k","w",NA,"mc",41816,980,4749,NA,405,"k","w",NA,"mc"
-"37","VA016","livermore",15631,49,207,NA,105,"k","w",NA,"mc",16356,NA,NA,1484,NA,NA,NA,"kw",NA
-"38","VA017","livermore",34214,894,3107,NA,2836,"k","w",NA,"mc",57018,NA,NA,8751,NA,NA,NA,"kw",NA
-"39","KY007","livermore",6500,206,844,NA,4303,"k","w",NA,"mc",6850,78,372,NA,1,"k","w",NA,"mc"
-"40","MS002","livermore",21147,355,1841,NA,324,"k","w",NA,"mc",22000,473,1997,NA,1763,"k","w",NA,"mc"
-"41","AR005","livermore",10000,175,813,NA,263,"k","w",NA,"mc",10000,164,817,NA,336,"k","w",NA,"mc"
-"42","TN010","livermore",41400,1677,7543,NA,3686,"k","w",NA,"mc",34732,1294,7945,NA,2500,"k","w",NA,"mc"
-"43","PA002","livermore",83289,3155,14529,NA,5365,"k","w",NA,"mc",75054,3903,18735,NA,5425,"k","w",NA,"mc"
-"44","GA004","livermore",58222,1657,9756,NA,4757,"k","w",NA,"mc",66326,2312,14674,NA,1468,"k","w",NA,"mc"
-"45","FL005","livermore",5115,203,1152,NA,506,"k","w",NA,"mc",5200,93,841,NA,NA,"k","w",NA,NA
-"46","MS015","livermore",14000,77,559,NA,38,"k","w",NA,"mc",6600,210,1116,NA,NA,"k","w",NA,NA
-"47","GA016","livermore",20139,NA,NA,1600,NA,NA,NA,"kw",NA,18832,NA,NA,2500,NA,NA,NA,"kw",NA
-"48","GA017","livermore",30477,430,1559,NA,1733,"k","w",NA,"mc",36934,NA,NA,7000,1000,NA,NA,"kw","mc"
-"49","GA018","livermore",13226,NA,NA,559,73,NA,NA,"kw","mc",18450,NA,NA,4100,200,NA,NA,"kw","mc"
-"50","VA122","livermore",30829,644,3430,NA,1591,"k","w",NA,"mc",18410,320,1540,NA,1050,"k","w",NA,"mc"
-"51","TN036","livermore",27939,189,1033,NA,1104,"k","w",NA,"mc",26897,1750,3800,NA,702,"k","w",NA,"mc"
-"52","NC020","livermore",16127,139,794,NA,170,"k","w",NA,"mc",16895,195,1313,NA,610,"k","w",NA,"mc"
-"53","GA022","livermore",20460,1348,105,NA,NA,"kw","mc",NA,NA,23811,1725,NA,NA,NA,"kw",NA,NA,NA
-"54","LA010","livermore",13000,496,2946,345,NA,"k","w","mc",NA,4192,282,NA,NA,NA,"kw",NA,NA,NA
-"55","VA048","livermore",65785,10120,345,NA,NA,"kw","mc",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"","battle","source","Battle_source","u_effectives","u_l1","u_l2","u_l3","u_l4","u_type1","u_type2","u_type3","u_type4","c_effectives","c_l1","c_l2","c_l3","c_l4","c_type1","c_type2","c_type3","c_type4"
+"1","VA005","livermore","BULL RUN",28452,481,1011,NA,1216,"k","w",NA,"mc",32232,387,1582,NA,12,"k","w",NA,"mc"
+"2","MO004","livermore","WILSON'S CREEK",5400,223,721,NA,291,"k","w",NA,"mc",11600,257,900,NA,27,"k","w",NA,"mc"
+"3","TN002","livermore","FORT DONELSON",27000,500,2108,NA,224,"k","w",NA,"mc",21000,NA,NA,2000,14623,NA,NA,"kw","mc"
+"4","VA010","livermore","WILLIAMSBURG",40768,456,1410,NA,373,"k","w",NA,"mc",31823,NA,NA,1570,133,NA,NA,"kw","mc"
+"5","VA022","livermore","CEDAR MOUNTAIN",8030,314,1445,NA,594,"k","w",NA,"mc",16868,231,1107,NA,NA,"k","w",NA,NA
+"6","MD002","livermore","SOUTH MOUNTAIN",28480,325,1403,NA,85,"k","w",NA,"mc",17852,325,1560,NA,800,"k","w",NA,"mc"
+"7","MD003","livermore","ANTIETAM",75316,2108,9549,NA,753,"k","w",NA,"mc",51844,2700,9024,NA,2000,"k","w",NA,"mc"
+"8","KY009","livermore","PERRYVILLE",36940,845,2851,NA,515,"k","w",NA,"mc",16000,510,2635,NA,251,"k","w",NA,"mc"
+"9","VA028","livermore","FREDERICKSBURG",106007,1284,9600,NA,1769,"k","w",NA,"mc",72497,595,4061,NA,653,"k","w",NA,"mc"
+"10","MS003","livermore","CHICKASAW BAYOU AND BLUFF",30720,208,1005,NA,563,"k","w",NA,"mc",13792,63,134,NA,10,"k","w",NA,"mc"
+"11","AR006","livermore","ARKANSAS POST",28944,134,898,NA,29,"k","w",NA,"mc",4564,28,81,NA,4791,"k","w",NA,"mc"
+"12","VA032","livermore","CHANCELLORSVILLE & FREDERICKSBURG",97382,1575,9594,NA,5676,"k","w",NA,"mc",57352,1665,9081,NA,2018,"k","w",NA,"mc"
+"13","MS009","livermore","CHAMPION'S HILL",29373,410,1844,NA,187,"k","w",NA,"mc",20000,381,1800,NA,1670,"k","w",NA,"mc"
+"14","MS011","livermore","VICKSBURG",45556,502,2550,NA,147,"k","w",NA,"mc",22301,NA,NA,6240,NA,NA,NA,"kw",NA
+"15","SC007","livermore","FORT WAGNER",5264,246,880,NA,389,"k","w",NA,"mc",1785,36,133,NA,5,"k","w",NA,"mc"
+"16","TN024","livermore","CHATTANOOGA",56359,753,4722,NA,349,"k","w",NA,"mc",46165,361,2160,NA,4146,"k","w",NA,"mc"
+"17","VA044","livermore","MINE RUN",69643,173,1099,NA,381,"k","w",NA,"mc",44426,110,570,NA,65,"k","w",NA,"mc"
+"18","LA019","livermore","PLEASANT HILL",12647,150,844,NA,375,"k","w",NA,"mc",14300,NA,NA,1000,500,NA,NA,"kw","mc"
+"19","VA046","livermore","WILDERNESS",101895,2246,12037,NA,3383,"k","w",NA,"mc",61025,NA,NA,7750,NA,NA,NA,"kw",NA
+"20","VA053","livermore","DREWRY'S BLUFF",15800,390,2380,NA,1390,"k","w",NA,"mc",18025,NA,NA,2860,210,NA,NA,"kw","mc"
+"21","VA062","livermore","COLD HARBOR",107907,NA,NA,12000,NA,NA,NA,"kw",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"22","VA063","livermore","PETERSBURG",63797,NA,NA,8150,NA,NA,NA,"kw",NA,41499,NA,NA,NA,NA,NA,NA,NA,NA
+"23","GA015","livermore","KENESAW MOUNTAIN",16225,NA,NA,1999,52,NA,NA,"kw","mc",17733,NA,NA,270,172,NA,NA,"kw","mc"
+"24","VA070","livermore","THE MINE",20708,NA,NA,2864,929,NA,NA,"kw","mc",11466,NA,NA,NA,NA,NA,NA,NA,NA
+"25","VA071","livermore","DEEP BOTTOM",27974,328,1852,NA,721,"k","w",NA,"mc",20008,NA,NA,NA,NA,NA,NA,NA,NA
+"26","VA072","livermore","WELDON RAILROAD",20289,198,1105,NA,3152,"k","w",NA,"mc",14787,NA,NA,1200,419,NA,NA,"kw","mc"
+"27","VA119","livermore","WINCHESTER (OPEQUAN)",37711,697,3983,NA,338,"k","w",NA,"mc",17103,276,1827,NA,1818,"k","w",NA,"mc"
+"28","VA075","livermore","CHAFFIN'S FARM AND FORTS HARRISON AND GILMER",19639,383,2299,NA,645,"k","w",NA,"mc",10836,NA,NA,NA,NA,NA,NA,NA,NA
+"29","VA079","livermore","BOYDTON PLANK ROAD",42823,166,1028,NA,564,"k","w",NA,"mc",20324,NA,NA,NA,NA,NA,NA,NA,NA
+"30","TN038","livermore","NASHVILLE",49773,387,2562,NA,112,"k","w",NA,"mc",23207,NA,NA,NA,4462,NA,NA,NA,"mc"
+"31","VA083","livermore","HATCHER'S RUN",34517,170,1160,NA,182,"k","w",NA,"mc",13835,NA,NA,NA,NA,NA,NA,NA,NA
+"32","VA086","livermore","DINWIDDIE COURTHOUSE AND WHITE OAK ROAD",45247,NA,NA,2198,583,NA,NA,"kw","mc",20030,NA,NA,NA,NA,NA,NA,NA,NA
+"33","VA089","livermore","PETERSBURG II",63299,625,3189,NA,326,"k","w",NA,"mc",18576,NA,NA,NA,NA,NA,NA,NA,NA
+"34","AR001","livermore","PEA RIDGE",11250,203,980,NA,201,"k","w",NA,"mc",14000,NA,NA,600,200,NA,NA,"kw","mc"
+"35","TN003","livermore","SHILOH",62682,1754,8408,NA,2885,"k","w",NA,"mc",40335,1723,8012,NA,959,"k","w",NA,"mc"
+"36","VA014","livermore","FAIR OAKS",41797,790,3594,NA,647,"k","w",NA,"mc",41816,980,4749,NA,405,"k","w",NA,"mc"
+"37","VA016","livermore","MECHANICSVILLE",15631,49,207,NA,105,"k","w",NA,"mc",16356,NA,NA,1484,NA,NA,NA,"kw",NA
+"38","VA017","livermore","GAINES' MILL",34214,894,3107,NA,2836,"k","w",NA,"mc",57018,NA,NA,8751,NA,NA,NA,"kw",NA
+"39","KY007","livermore","RICHMOND, KY",6500,206,844,NA,4303,"k","w",NA,"mc",6850,78,372,NA,1,"k","w",NA,"mc"
+"40","MS002","livermore","CORINTH",21147,355,1841,NA,324,"k","w",NA,"mc",22000,473,1997,NA,1763,"k","w",NA,"mc"
+"41","AR005","livermore","PRAIRIE GROVE, ARK",10000,175,813,NA,263,"k","w",NA,"mc",10000,164,817,NA,336,"k","w",NA,"mc"
+"42","TN010","livermore","STONE'S RIVER",41400,1677,7543,NA,3686,"k","w",NA,"mc",34732,1294,7945,NA,2500,"k","w",NA,"mc"
+"43","PA002","livermore","GETTYSBURG",83289,3155,14529,NA,5365,"k","w",NA,"mc",75054,3903,18735,NA,5425,"k","w",NA,"mc"
+"44","GA004","livermore","CHICKAMAUGA",58222,1657,9756,NA,4757,"k","w",NA,"mc",66326,2312,14674,NA,1468,"k","w",NA,"mc"
+"45","FL005","livermore","OLUSTEE, FLA",5115,203,1152,NA,506,"k","w",NA,"mc",5200,93,841,NA,NA,"k","w",NA,NA
+"46","MS015","livermore","TUPELO, MISS",14000,77,559,NA,38,"k","w",NA,"mc",6600,210,1116,NA,NA,"k","w",NA,NA
+"47","GA016","livermore","PEACH TREE CREEK",20139,NA,NA,1600,NA,NA,NA,"kw",NA,18832,NA,NA,2500,NA,NA,NA,"kw",NA
+"48","GA017","livermore","ATLANTA",30477,430,1559,NA,1733,"k","w",NA,"mc",36934,NA,NA,7000,1000,NA,NA,"kw","mc"
+"49","GA018","livermore","EZRA CHURCH (ATLANTA)",13226,NA,NA,559,73,NA,NA,"kw","mc",18450,NA,NA,4100,200,NA,NA,"kw","mc"
+"50","VA122","livermore","CEDAR CREEK",30829,644,3430,NA,1591,"k","w",NA,"mc",18410,320,1540,NA,1050,"k","w",NA,"mc"
+"51","TN036","livermore","FRANKLIN",27939,189,1033,NA,1104,"k","w",NA,"mc",26897,1750,3800,NA,702,"k","w",NA,"mc"
+"52","NC020","livermore","BENTONVILLE",16127,139,794,NA,170,"k","w",NA,"mc",16895,195,1313,NA,610,"k","w",NA,"mc"
+"53","GA022","livermore","Jonesborough",20460,1348,105,NA,NA,"kw","mc",NA,NA,23811,1725,NA,NA,NA,"kw",NA,NA,NA
+"54","LA010","livermore","PORT HUDSON",13000,496,2946,345,NA,"k","w","mc",NA,4192,282,NA,NA,NA,"kw",NA,NA,NA
+"55","VA048","livermore","SPOTTSYLVANIA",65785,10120,345,NA,NA,"kw","mc",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA

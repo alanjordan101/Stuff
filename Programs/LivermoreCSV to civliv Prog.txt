@@ -209,6 +209,6 @@ civliv<-civ2[,c("battle", "source", "Battle_source",
 testliv<-civ2[,c("battle", "source", "Battle_source", "strength_US_liv", "strength_CS_liv", "casualties_US_liv", "casualties_CS_liv")]	
 
 
-write.csv(civliv, file = "C:\\Users\\alan\\Documents\\GitHub\\Stuff\\Bucket\\civliv.csv")
-write.csv(testliv, file = "C:\\Users\\alan\\Documents\\GitHub\\Stuff\\testliv2014-11-06.csv")
+write.csv(civliv, file = "C:\\Stuff\\Bucket\\civliv.csv")
+write.csv(testliv, file = "C:\\Stuff\\testliv2014-11-06.csv")
 
