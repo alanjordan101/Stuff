@@ -27,19 +27,19 @@ civ$i_u<-civ$I
 
 civ$temp<-ifelse(grepl("surrend", civ$description ) | grepl("cap", civ$description ) | grepl("pris", civ$description ) ,"*","")
 
-civ$crap1<- ifelse( as.character(regmatches(civ$desc, gregexpr("[0-9]+ pris", civ$desc))) == "character(0)", "0", as.character(regmatches(civ$desc, gregexpr("[0-9]+ pris", civ$desc))))
-civ$crap2<- ifelse( as.character(regmatches(civ$desc, gregexpr("[0-9]+ cap", civ$desc))) == "character(0)", "0", as.character(regmatches(civ$desc, gregexpr("[0-9]+ cap", civ$desc))))
-civ$crap3<- ifelse( as.character(regmatches(civ$desc, gregexpr("[0-9]+ sur", civ$desc))) == "character(0)", "0", as.character(regmatches(civ$desc, gregexpr("[0-9]+ sur", civ$desc))))
-civ$crap4<- ifelse( as.character(regmatches(civ$desc, gregexpr("led: [0-9]+", civ$desc))) == "character(0)", "0", as.character(regmatches(civ$desc, gregexpr("led: [0-9]+", civ$desc))))
+civ$temp1<- ifelse( as.character(regmatches(civ$desc, gregexpr("[0-9]+ pris", civ$desc))) == "character(0)", "0", as.character(regmatches(civ$desc, gregexpr("[0-9]+ pris", civ$desc))))
+civ$temp2<- ifelse( as.character(regmatches(civ$desc, gregexpr("[0-9]+ cap", civ$desc))) == "character(0)", "0", as.character(regmatches(civ$desc, gregexpr("[0-9]+ cap", civ$desc))))
+civ$temp3<- ifelse( as.character(regmatches(civ$desc, gregexpr("[0-9]+ sur", civ$desc))) == "character(0)", "0", as.character(regmatches(civ$desc, gregexpr("[0-9]+ sur", civ$desc))))
+civ$temp4<- ifelse( as.character(regmatches(civ$desc, gregexpr("led: [0-9]+", civ$desc))) == "character(0)", "0", as.character(regmatches(civ$desc, gregexpr("led: [0-9]+", civ$desc))))
 
 
-civ$crap1<-ifelse(civ$crap1==" ",0,    as.numeric(gsub(" pris", "", civ$crap1, fixed = TRUE)))   
-civ$crap2<-ifelse(civ$crap2==" ",0,    as.numeric(gsub(" cap", "", civ$crap2, fixed = TRUE)))  
-civ$crap3<-ifelse(civ$crap3==" ",0,    as.numeric(gsub(" sur", "", civ$crap3, fixed = TRUE)))  
-civ$crap4<-ifelse(civ$crap4==" ",0,    as.numeric(gsub("led: ", "", civ$crap4, fixed = TRUE)))  
+civ$temp1<-ifelse(civ$temp1==" ",0,    as.numeric(gsub(" pris", "", civ$temp1, fixed = TRUE)))   
+civ$temp2<-ifelse(civ$temp2==" ",0,    as.numeric(gsub(" cap", "", civ$temp2, fixed = TRUE)))  
+civ$temp3<-ifelse(civ$temp3==" ",0,    as.numeric(gsub(" sur", "", civ$temp3, fixed = TRUE)))  
+civ$temp4<-ifelse(civ$temp4==" ",0,    as.numeric(gsub("led: ", "", civ$temp4, fixed = TRUE)))  
 
  
-civ$cap<-rowSums(civ[,c("crap1", "crap2", "crap3", "crap4")])
+civ$cap<-rowSums(civ[,c("temp1", "temp2", "temp3", "temp4")])
 
 civ$cap1[grepl("prisoners) CS" , civ$desc) ]<-"CS"
 civ$cap1[grepl("prisoners CS" , civ$desc) ]<-"CS"
@@ -54,24 +54,28 @@ civ$cap1[grepl("prisoners US" , civ$desc) ]<-"US"
 civ$cap1[grepl("ured) US" , civ$desc) ]<-"US"
 
 
- 
+confCap<-civ$cap1=="CS" & !is.na(civ$cap1) 
+unionCap<-civ$cap1=="US" & !is.na(civ$cap1)
 
-civ$c_c[civ$cap1=="CS" & !is.na(civ$cap1)]<-civ$cap[civ$cap1=="CS" & !is.na(civ$cap1)]
-civ$u_c[civ$cap1=="US" & !is.na(civ$cap1)]<-civ$cap[civ$cap1=="US" & !is.na(civ$cap1)]
-
-
-
-
-civ$u_u[civ$cap1=="US" & !is.na(civ$cap1) & is.na(civ$u_ul)]<- civ$u_u[civ$cap1=="US" & !is.na(civ$cap1) & is.na(civ$u_ul)] - civ$u_c[civ$cap1=="US" & !is.na(civ$cap1) & is.na(civ$u_ul)]
-civ$u_ul[civ$cap1=="US" & !is.na(civ$cap1) & !is.na(civ$u_ul)]<- civ$u_ul[civ$cap1=="US" & !is.na(civ$cap1) & !is.na(civ$u_ul)] - civ$u_c[civ$cap1=="US" & !is.na(civ$cap1) & !is.na(civ$u_ul)]
-civ$u_uu[civ$cap1=="US" & !is.na(civ$cap1) & !is.na(civ$u_ul)]<- civ$u_uu[civ$cap1=="US & !is.na(civ$cap1)" & !is.na(civ$u_ul)] - civ$u_c[civ$cap1=="US" & !is.na(civ$cap1) & !is.na(civ$u_ul)]
+civ$c_c[confCap]<-civ$cap[confCap]
+civ$u_c[unionCap]<-civ$cap[unionCap]
 
 
-civ$c_u[civ$cap1=="CS" & !is.na(civ$cap1) & is.na(civ$c_ul)]<- civ$c_u[civ$cap1=="CS" & !is.na(civ$cap1) & is.na(civ$c_ul)] - civ$c_c[civ$cap1=="CS" & !is.na(civ$cap1) & is.na(civ$c_ul)]
-civ$c_ul[civ$cap1=="CS" & !is.na(civ$cap1) & !is.na(civ$c_ul)]<- civ$c_ul[civ$cap1=="CS" & !is.na(civ$cap1) & !is.na(civ$c_ul)] - civ$c_c[civ$cap1=="CS" & !is.na(civ$cap1) & !is.na(civ$c_ul)]
-civ$c_uu[civ$cap1=="CS" & !is.na(civ$cap1) & !is.na(civ$c_ul)]<- civ$c_uu[civ$cap1=="CS" & !is.na(civ$cap1) & !is.na(civ$c_ul)] - civ$c_c[civ$cap1=="CS" & !is.na(civ$cap1) & !is.na(civ$c_ul)]
+
+
+civ$u_u[unionCap & is.na(civ$u_ul)]<- civ$u_u[unionCap & is.na(civ$u_ul)] - civ$u_c[unionCap & is.na(civ$u_ul)]
+civ$u_ul[unionCap & !is.na(civ$u_ul)]<- civ$u_ul[unionCap & !is.na(civ$u_ul)] - civ$u_c[unionCap & !is.na(civ$u_ul)]
+civ$u_uu[unionCap & !is.na(civ$u_ul)]<- civ$u_uu[civ$cap1=="US & !is.na(civ$cap1)" & !is.na(civ$u_ul)] - civ$u_c[unionCap & !is.na(civ$u_ul)]
+
+
+civ$c_u[confCap & is.na(civ$c_ul)]<- civ$c_u[confCap & is.na(civ$c_ul)] - civ$c_c[confCap & is.na(civ$c_ul)]
+civ$c_ul[confCap & !is.na(civ$c_ul)]<- civ$c_ul[confCap & !is.na(civ$c_ul)] - civ$c_c[confCap & !is.na(civ$c_ul)]
+civ$c_uu[confCap & !is.na(civ$c_ul)]<- civ$c_uu[confCap & !is.na(civ$c_ul)] - civ$c_c[confCap & !is.na(civ$c_ul)]
 
 civ$battle<-civ$cwsacid
 
 civken<-civ[,c("battle",  "u_u",  "u_ul",  "u_uu",  "c_u", "c_ul", "c_uu",  "t_u",  "i_u",  "c_c" ,  "u_c")] 
 
+
+write.csv(civken, file = "C:\\Stuff\\Bucket\\civken.csv")
+#write.csv(testken, file = "C:\\Stuff\\testliv2014-11-07.csv")
