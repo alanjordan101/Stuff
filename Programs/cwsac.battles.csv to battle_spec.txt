@@ -1,0 +1,43 @@
+library(MASS)
+library(rms)
+library(plyr)
+library(RCurl)
+
+
+
+
+x <- getURL("https://raw.githubusercontent.com/jrnold/acw_battle_data/master/data/cwsac/cwsac_battles.csv",ssl.verifypeer = FALSE)
+civ<-read.csv(text=x)
+
+x2 <- getURL("https://raw.githubusercontent.com/jrnold/acw_battle_data/master/data/cwsac/campaigns.csv",ssl.verifypeer = FALSE)
+camp<-read.csv(text=x2)
+camp<-subset(camp, select=c(campaign,theater))
+
+civ<-merge(civ,camp,id=campaign)
+civ<-merge(civ,area,id=battle)
+ 
+x3<-getURL("https://raw.githubusercontent.com/jrnold/acw_battle_data/master/data/cwsac/battlefield_area_statistics.csv",ssl.verifypeer = FALSE)
+area<-read.csv(text=x3)
+
+
+
+#Convert text format date into date format
+	civ$syear<-as.numeric(substr(civ$start_date,1,4))
+	civ$smonth<-as.numeric(substr(civ$start_date,6,7))
+	civ$sday<-as.numeric(substr(civ$start_date,9,10))
+
+	civ$eyear<-as.numeric(substr(civ$end_date,1,4))
+	civ$emonth<-as.numeric(substr(civ$end_date,6,7))
+	civ$eday<-as.numeric(substr(civ$end_date,9,10))
+
+	civ$startDate<-as.Date(ISOdate(civ$syear, civ$smonth, civ$sday))
+	civ$endDate<-as.Date(ISOdate(civ$eyear, civ$emonth, civ$eday))
+
+
+
+
+battle_spec<-civ[,c("battle", "battle_name",    "campaign", "theater", "startDate", "endDate", "state", "location", "other_names", "operation", "url", "significance",        
+	"preservation", "study_area", "core_area",  "potnr_boundary")] 
+
+
+ 
