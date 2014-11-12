@@ -3,7 +3,8 @@ library(rms)
 library(plyr)
 library(RCurl)
 
-
+#### Should Glendale/White Oak Swamp  be separate?
+#### I'm leaving them together for now.
 
 
 x <- getURL("https://raw.githubusercontent.com/jrnold/acw_battle_data/master/data/cwsac/cwsac_battles.csv",ssl.verifypeer = FALSE)
@@ -18,6 +19,10 @@ civ<-merge(civ,area,id=battle)
  
 x3<-getURL("https://raw.githubusercontent.com/jrnold/acw_battle_data/master/data/cwsac/battlefield_area_statistics.csv",ssl.verifypeer = FALSE)
 area<-read.csv(text=x3)
+
+latlong<-read.csv("C:\\Stuff\\InputData\\LatLong.csv", header=TRUE)
+
+civ<-merge(civ,latlong, id=battle)
 
 
 
@@ -37,7 +42,12 @@ area<-read.csv(text=x3)
 
 
 battle_spec<-civ[,c("battle", "battle_name",    "campaign", "theater", "startDate", "endDate", "state", "location", "other_names", "operation", "url", "significance",        
-	"preservation", "study_area", "core_area",  "potnr_boundary")] 
+	"preservation", "study_area", "core_area",  "potnr_boundary", "lat", "long")] 
 
 
- 
+write.csv(battle_spec, file = "C:\\Stuff\\Bucket\\battle_spec.csv")
+
+
+
+
+

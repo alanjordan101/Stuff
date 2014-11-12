@@ -1,0 +1,65 @@
+library(MASS)
+library(rms)
+library(plyr)
+library(RCurl)
+
+
+x <- getURL("https://raw.githubusercontent.com/jrnold/acw_battle_data/master/data/cwsac/cwsac_battles.csv",ssl.verifypeer = FALSE)
+civ<-read.csv(text=x)
+
+# remove commas
+civ$castext<-gsub(",", "", civ$casualties_text, fixed = TRUE)
+
+#civ$cap<-ifelse(grepl("surrend", civ$castext ) | grepl("cap", civ$castext ) | grepl("pris", civ$castext ) ,"*","")
+ 
+
+civ$u_kwmc<-NA
+civ$c_kwmc<-NA
+civ$t_kwmc<-NA
+civ$i_kwmc<-0
+
+# plug number after "US" appear into u_kwmc.
+civ$u_kwmc<- ifelse( as.character(regmatches(civ$castext, gregexpr("US [0-9]+", civ$castext))) == "character(0)", "0", as.character(regmatches(civ$castext, gregexpr("US [0-9]+", civ$castext))))
+civ$u_kwmc<-ifelse(civ$u_kwmc=="0",NA,    as.numeric(gsub("US ", "", civ$u_kwmc, fixed = TRUE))) 
+
+# plug number after "CS" appear into c_kwmc.
+civ$c_kwmc<- ifelse( as.character(regmatches(civ$castext, gregexpr("CS [0-9]+", civ$castext))) == "character(0)", "0", as.character(regmatches(civ$castext, gregexpr("CS [0-9]+", civ$castext))))
+civ$c_kwmc<-ifelse(civ$c_kwmc=="0",NA,    as.numeric(gsub("CS ", "", civ$u_kwmc, fixed = TRUE)))
+
+# plug number before "total" appears into t_kwmc.
+civ$t_kwmc<- ifelse( as.character(regmatches(civ$castext, gregexpr("[0-9]+ total", civ$castext))) == "character(0)", "0", as.character(regmatches(civ$castext, gregexpr("[0-9]+ total", civ$castext))))
+civ$t_kwmc<-ifelse(civ$t_kwmc=="0",NA,    as.numeric(gsub(" total", "", civ$u_kwmc, fixed = TRUE))) 
+ 
+
+# program special cases.
+# go back and list battle identifiers
+
+civ$t_kwmc[civ$battle=="VA030"]<- 1160-152
+
+civ$t_kwmc[substr(civ$castext,1,4)=="None"]<-0
+civ$u_kwmc[substr(civ$castext,1,4)=="None"]<-0
+civ$c_kwmc[substr(civ$castext,1,4)=="None"]<-0
+
+civ$u_kwmc[grepl("US none", civ$castext)]<-0
+civ$u_c[grepl("US 2,500 wounded", civ$castext)]<-2500
+civ$u_c[grepl("US 800 captured", civ$castext)]<-800
+civ$c_c[grepl("1600 Confederate prisoners", civ$castext)]<-1600
+
+civ$t_kwmc[grepl("1817 for entire raid", civ$castext)]<-1817-600
+civ$t_kwmc[grepl("(1817 for entire raid)", civ$castext)]<-600
+
+civ$t_kwmc[grepl("720 (surgeon's list reports 556)", civ$castext)]<-720
+
+# Vicksburg
+civ$c_c[grepl("27805 Confederate soldiers paroled", civ$castext)]<-27805
+civ$t_kwmc[grepl("27805 Confederate soldiers paroled", civ$castext)]<-27805+700
+
+ 
+civ$u_kwmc[grepl("US approx. 344", civ$castext)]<-344
+
+
+
+#Total 4475. April 9 only 3529 (US 629; CS 2900)
+#129 total (US 23k/69w/21m; CS incomplete Marshall 4k/12w Wharton no report)
+#12922 total (US 44k/173w/12419 captured; CS 39k/247w)
+#2907 total (US 37K/214W/13M; CS 23K/58W/62M/2500 captured)
