@@ -1,7 +1,7 @@
-library(MASS)
-library(rms)
 library(plyr)
 library(RCurl)
+library(yaml)
+library(reshape)
 
 
 x <- getURL("https://raw.githubusercontent.com/jrnold/acw_battle_data/master/data/cwsac/cwsac_battles.csv",ssl.verifypeer = FALSE)
@@ -96,3 +96,43 @@ check<-subset(civ, select=c("battle",  "castext", "u_kwmc", "c_kwmc", "t_kwmc", 
 	"u_m", "c_kl", "c_wl", "c_ml", "c_cl", "u_mc", "c_k", "c_w", "c_m"  )) 
 check
     
+
+
+
+
+
+#######################################################################################################################
+
+
+x <- getURL("https://raw.githubusercontent.com/jrnold/acw_battle_data/master/data/cwsac/forces.yaml",ssl.verifypeer = FALSE)
+
+
+x2<-gsub(",", "", x, fixed = TRUE)
+force<- data.frame(unlist(yaml.load(x2 )))
+force$rn<-rownames(force) 
+force$bat<-substr(force$rn,1,5)
+
+stren<-subset(force, grepl("stren",force$rn))
+colnames(stren)<-c("num", "cat", "bat")
+
+
+for (i in 1:nrow(stren)) {
+	stren[i,]$cat<-gsub(stren[i,]$bat, "", stren[i,]$cat )
+}
+
+stren$cat<-ifelse(stren$cat==".CS.strength", "CS_strength", stren$cat) 
+stren$cat<-ifelse(stren$cat==".CS.strength_max", "CS_strength.u", stren$cat) 
+stren$cat<-ifelse(stren$cat==".CS.strength_min", "CS_strength.l", stren$cat)  
+stren$cat<-ifelse(stren$cat==".I.strength_max", "I_strength.u", stren$cat)  
+stren$cat<-ifelse(stren$cat==".I.strength_min", "I_strength.l", stren$cat)        
+stren$cat<-ifelse(stren$cat==".strength", "T_strength", stren$cat)     
+stren$cat<-ifelse(stren$cat==".US.strength", "US_strength", stren$cat) 
+stren$cat<-ifelse(stren$cat==".US.strength_max", "US_strength.u", stren$cat) 
+stren$cat<-ifelse(stren$cat==".US.strength_min", "US_strength.l", stren$cat)
+
+ 
+
+
+mdata <- melt(stren, id=c("bat", "cat"), na.rm=TRUE)
+
+mdata2 <- cast(mdata, bat~cat)

@@ -14,16 +14,16 @@ civ$desc<-gsub(",", "", civ$description, fixed = TRUE)
 
 
 
-civ$u_u<-ifelse(is.na(civ$US_max),civ$US_min, NA)
-civ$u_ul<-ifelse(!is.na(civ$US_max),civ$US_min, NA)
-civ$u_uu<-civ$US_max
+civ$u_kwmc<-ifelse(is.na(civ$US_max),civ$US_min, NA)
+civ$u_kwmcl<-ifelse(!is.na(civ$US_max),civ$US_min, NA)
+civ$u_kwmcu<-civ$US_max
 
-civ$c_u<-ifelse(is.na(civ$CS_max),civ$CS_min, NA)
-civ$c_ul<-ifelse(!is.na(civ$CS_max),civ$CS_min, NA)
-civ$c_uu<-civ$US_max
+civ$c_kwmc<-ifelse(is.na(civ$CS_max),civ$CS_min, NA)
+civ$c_kwmcl<-ifelse(!is.na(civ$CS_max),civ$CS_min, NA)
+civ$c_kwmcu<-civ$US_max
 
-civ$t_u<-civ$total
-civ$i_u<-civ$I
+civ$t_kwmc<-civ$total
+civ$i_kwmc<-civ$I
 
 civ$temp<-ifelse(grepl("surrend", civ$description ) | grepl("cap", civ$description ) | grepl("pris", civ$description ) ,"*","")
 
@@ -63,18 +63,18 @@ civ$u_c[unionCap]<-civ$cap[unionCap]
 
 
 
-civ$u_u[unionCap & is.na(civ$u_ul)]<- civ$u_u[unionCap & is.na(civ$u_ul)] - civ$u_c[unionCap & is.na(civ$u_ul)]
-civ$u_ul[unionCap & !is.na(civ$u_ul)]<- civ$u_ul[unionCap & !is.na(civ$u_ul)] - civ$u_c[unionCap & !is.na(civ$u_ul)]
-civ$u_uu[unionCap & !is.na(civ$u_ul)]<- civ$u_uu[civ$cap1=="US & !is.na(civ$cap1)" & !is.na(civ$u_ul)] - civ$u_c[unionCap & !is.na(civ$u_ul)]
+civ$u_kwmc[unionCap & is.na(civ$u_kwmcl)]<- civ$u_kwmc[unionCap & is.na(civ$u_kwmcl)] - civ$u_c[unionCap & is.na(civ$u_kwmcl)]
+civ$u_kwmcl[unionCap & !is.na(civ$u_kwmcl)]<- civ$u_kwmcl[unionCap & !is.na(civ$u_kwmcl)] - civ$u_c[unionCap & !is.na(civ$u_kwmcl)]
+civ$u_kwmcu[unionCap & !is.na(civ$u_kwmcl)]<- civ$u_kwmcu[civ$cap1=="US & !is.na(civ$cap1)" & !is.na(civ$u_kwmcl)] - civ$u_c[unionCap & !is.na(civ$u_kwmcl)]
 
 
-civ$c_u[confCap & is.na(civ$c_ul)]<- civ$c_u[confCap & is.na(civ$c_ul)] - civ$c_c[confCap & is.na(civ$c_ul)]
-civ$c_ul[confCap & !is.na(civ$c_ul)]<- civ$c_ul[confCap & !is.na(civ$c_ul)] - civ$c_c[confCap & !is.na(civ$c_ul)]
-civ$c_uu[confCap & !is.na(civ$c_ul)]<- civ$c_uu[confCap & !is.na(civ$c_ul)] - civ$c_c[confCap & !is.na(civ$c_ul)]
+civ$c_kwmc[confCap & is.na(civ$c_kwmcl)]<- civ$c_kwmc[confCap & is.na(civ$c_kwmcl)] - civ$c_c[confCap & is.na(civ$c_kwmcl)]
+civ$c_kwmcl[confCap & !is.na(civ$c_kwmcl)]<- civ$c_kwmcl[confCap & !is.na(civ$c_kwmcl)] - civ$c_c[confCap & !is.na(civ$c_kwmcl)]
+civ$c_kwmcu[confCap & !is.na(civ$c_kwmcl)]<- civ$c_kwmcu[confCap & !is.na(civ$c_kwmcl)] - civ$c_c[confCap & !is.na(civ$c_kwmcl)]
 
 civ$battle<-civ$cwsacid
 
-civken<-civ[,c("battle",  "u_u",  "u_ul",  "u_uu",  "c_u", "c_ul", "c_uu",  "t_u",  "i_u",  "c_c" ,  "u_c")] 
+civken<-civ[,c("battle",  "u_kwmc",  "u_kwmcl",  "u_kwmcu",  "c_kwmc", "c_kwmcl", "c_kwmcu",  "t_kwmc",  "i_kwmc",  "c_c" ,  "u_c")] 
 
 
 write.csv(civken, file = "C:\\Stuff\\Bucket\\civken.csv")
