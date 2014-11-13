@@ -10,8 +10,6 @@ civ<-read.csv(text=x)
 # remove commas
 civ$castext<-gsub(",", "", civ$casualties_text, fixed = TRUE)
 
-#civ$cap<-ifelse(grepl("surrend", civ$castext ) | grepl("cap", civ$castext ) | grepl("pris", civ$castext ) ,"*","")
- 
 
 civ$u_kwmc<-NA
 civ$c_kwmc<-NA
@@ -24,11 +22,11 @@ civ$u_kwmc<-ifelse(civ$u_kwmc=="0",NA,    as.numeric(gsub("US ", "", civ$u_kwmc,
 
 # plug number after "CS" appear into c_kwmc.
 civ$c_kwmc<- ifelse( as.character(regmatches(civ$castext, gregexpr("CS [0-9]+", civ$castext))) == "character(0)", "0", as.character(regmatches(civ$castext, gregexpr("CS [0-9]+", civ$castext))))
-civ$c_kwmc<-ifelse(civ$c_kwmc=="0",NA,    as.numeric(gsub("CS ", "", civ$u_kwmc, fixed = TRUE)))
+civ$c_kwmc<-ifelse(civ$c_kwmc=="0",NA,    as.numeric(gsub("CS ", "", civ$c_kwmc, fixed = TRUE)))
 
 # plug number before "total" appears into t_kwmc.
 civ$t_kwmc<- ifelse( as.character(regmatches(civ$castext, gregexpr("[0-9]+ total", civ$castext))) == "character(0)", "0", as.character(regmatches(civ$castext, gregexpr("[0-9]+ total", civ$castext))))
-civ$t_kwmc<-ifelse(civ$t_kwmc=="0",NA,    as.numeric(gsub(" total", "", civ$u_kwmc, fixed = TRUE))) 
+civ$t_kwmc<-ifelse(civ$t_kwmc=="0",NA,    as.numeric(gsub(" total", "", civ$t_kwmc, fixed = TRUE))) 
  
 
 # program special cases.
@@ -57,9 +55,44 @@ civ$t_kwmc[grepl("27805 Confederate soldiers paroled", civ$castext)]<-27805+700
  
 civ$u_kwmc[grepl("US approx. 344", civ$castext)]<-344
 
+civ$t_kwmc[grepl("Total 4475. April 9 only 3529 (US 629; CS 2900)", civ$castext)]<-3529
+
+civ$u_k<-NA
+civ$u_k[civ$battle=="WV009"]<-23
+civ$u_w[civ$battle=="WV009"]<-69
+civ$u_m[civ$battle=="WV009"]<-21
+civ$u_c[civ$battle=="WV009"]<-0
+civ$c_kl[civ$battle=="WV009"]<-4
+civ$c_wl[civ$battle=="WV009"]<-12
+civ$c_ml[civ$battle=="WV009"]<-0
+civ$c_cl[civ$battle=="WV009"]<-0
+
+civ$u_k[civ$battle=="WV010"]<-44
+civ$u_w[civ$battle=="WV010"]<-173
+civ$u_mc[civ$battle=="WV010"]<-12419
+civ$c_k[civ$battle=="WV010"]<-39
+civ$c_w[civ$battle=="WV010"]<-247
+civ$c_m[civ$battle=="WV010"]<-0
+civ$c_c[civ$battle=="WV010"]<-0
+
+civ$u_k[civ$battle=="NC002"]<-37
+civ$u_w[civ$battle=="NC002"]<-214
+civ$u_m[civ$battle=="NC002"]<-13
+civ$u_c[civ$battle=="NC002"]<-0
+
+civ$c_k[civ$battle=="NC002"]<-23
+civ$c_w[civ$battle=="NC002"]<-58
+civ$c_m[civ$battle=="NC002"]<-62
+civ$c_c[civ$battle=="NC002"]<-2500
 
 
 #Total 4475. April 9 only 3529 (US 629; CS 2900)
 #129 total (US 23k/69w/21m; CS incomplete Marshall 4k/12w Wharton no report)
 #12922 total (US 44k/173w/12419 captured; CS 39k/247w)
 #2907 total (US 37K/214W/13M; CS 23K/58W/62M/2500 captured)
+
+
+check<-subset(civ, select=c("battle",  "castext", "u_kwmc", "c_kwmc", "t_kwmc", "i_kwmc", "u_c", "c_c", "u_k", "u_w", 
+	"u_m", "c_kl", "c_wl", "c_ml", "c_cl", "u_mc", "c_k", "c_w", "c_m"  )) 
+check
+    
