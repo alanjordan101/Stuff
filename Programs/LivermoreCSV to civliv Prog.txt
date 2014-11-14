@@ -23,29 +23,29 @@ civ<-subset(civ,
 civu<-subset(civ,NAMA=="UNION")
 civc<-subset(civ,NAMA=="CONFEDERATE")
 
-civu$u_effectives<-	civu$STRA
+civu$u_effect<-	civu$STRA
 civu$u_k<-		civu$KIAA
 civu$u_w<-		civu$WIAA
 civu$u_kw<-		civu$KWA
 civu$u_mc<-		civu$MPOWA
-civu$c_effectives<-	civu$STRD
+civu$c_effect<-	civu$STRD
 civu$c_k<-		civu$KIAD
 civu$c_w<-		civu$WIAD
 civu$c_kw<-		civu$KWD
 civu$c_mc<-		civu$MPOWD
 
-civc$u_effectives<-	civc$STRD
+civc$u_effect<-	civc$STRD
 civc$u_k<-		civc$KIAD
 civc$u_w<-		civc$WIAD
 civc$u_kw<-		civc$KWD
 civc$u_mc<-		civc$MPOWD
-civc$c_effectives<-	civc$STRA
+civc$c_effect<-	civc$STRA
 civc$c_k<-		civc$KIAA
 civc$c_w<-		civc$WIAA
 civc$c_kw<-		civc$KWA
 civc$c_mc<-		civc$MPOWA
 
-civ2<-subset(rbind(civu,civc), select=c(Battle, u_effectives, u_k, u_w, u_kw, u_mc, c_effectives, c_k, c_w, c_kw, c_mc))
+civ2<-subset(rbind(civu,civc), select=c(Battle, u_effect, u_k, u_w, u_kw, u_mc, c_effect, c_k, c_w, c_kw, c_mc))
 
 # NOTE 1: When the number of KIA is not separately available, the values under WIA are KIA + WIA.
 # Therefore when KIA is missing, erase the wounded (l2) so that numbers aren't double counted in the sum
@@ -66,8 +66,8 @@ civ2
 jones1<-subset(civ2, Battle %in% c('JONESBORO, GA I', 'JONESBORO, GA II'))
 jones<-data.frame("JONESBORO, GA")
 colnames(jones)<-"Battle"
-jones$u_effectives<-max(jones1$u_effectives)
-jones$c_effectives<-max(jones1$c_effectives)
+jones$u_effect<-max(jones1$u_effect)
+jones$c_effect<-max(jones1$c_effect)
 jones$u_kw<-sum(jones1$u_k, jones1$u_w, jones1$u_kw, na.rm=TRUE)
 
 
@@ -81,8 +81,8 @@ civ2<-rbind.fill(civ2,jones)
 hud1<-subset(civ2, Battle %in% c('PORT HUDSON I', 'PORT HUDSON II'))
 hud<-data.frame("PORT HUDSON")
 colnames(hud)<-"Battle"
-hud$u_effectives<-max(hud1$u_effectives)
-hud$c_effectives<-max(hud1$c_effectives)
+hud$u_effect<-max(hud1$u_effect)
+hud$c_effect<-max(hud1$c_effect)
 hud$u_k<-sum(hud1$u_k)
 hud$u_w<-sum(hud1$u_w)
 hud$u_mc<-sum(hud1$u_mc)
@@ -99,7 +99,7 @@ civ2<-rbind.fill(civ2,hud)
 spot1<-subset(civ2, Battle %in% c('SPOTTSYLVANIA I', 'SPOTTSYLVANIA II'))
 spot<-data.frame("SPOTTSYLVANIA")
 colnames(spot)<-"Battle"
-spot$u_effectives<-max(spot1$u_effectives)
+spot$u_effect<-max(spot1$u_effect)
 spot$u_k<-spot1[1,3]+spot1[1,4]+spot1[2,5]
 
 
@@ -170,8 +170,8 @@ civ2$battle[civ2$Battle=='CEDAR CREEK']<-'VA122'
 civ2$suffix<-'liv'
 civ2$source<-'livermore'
 
-civ2$strength_US_liv<-civ2$u_effectives
-civ2$strength_CS_liv<-civ2$c_effectives
+civ2$strength_US_liv<-civ2$u_effect
+civ2$strength_CS_liv<-civ2$c_effect
 
 civ2$casualties_US_liv<-NA
 civ2$casualties_CS_liv<-NA
@@ -183,7 +183,7 @@ civ2$casualties_CS_liv<-ifelse(rowSums(cbind(civ2$c_k, civ2$c_w, civ2$c_kw), na.
 
 civ2$Battle_source<-civ2$Battle
 civliv<-civ2[,c("battle", "source", "Battle_source",
-	"u_effectives", "u_k", "u_w", "u_kw", "u_mc", 	"c_effectives", "c_k", "c_w", "c_kw", "c_mc")]	 
+	"u_effect", "u_k", "u_w", "u_kw", "u_mc", 	"c_effect", "c_k", "c_w", "c_kw", "c_mc")]	 
  	 
 testliv<-civ2[,c("battle", "source", "Battle_source", "strength_US_liv", "strength_CS_liv", "casualties_US_liv", "casualties_CS_liv")]	
 

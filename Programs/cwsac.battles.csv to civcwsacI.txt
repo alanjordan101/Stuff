@@ -96,7 +96,8 @@ check<-subset(civ, select=c("battle",  "castext", "u_kwmc", "c_kwmc", "t_kwmc", 
 	"u_m", "c_kl", "c_wl", "c_ml", "c_cl", "u_mc", "c_k", "c_w", "c_m"  )) 
 check
     
-
+civcwsac<-subset(civ, select=c("battle", "u_kwmc", "c_kwmc", "t_kwmc", "i_kwmc", "u_c", "c_c", "u_k", "u_w", 
+	"u_m", "c_kl", "c_wl", "c_ml", "c_cl", "u_mc", "c_k", "c_w", "c_m"  )) 
 
 
 
@@ -110,29 +111,34 @@ x <- getURL("https://raw.githubusercontent.com/jrnold/acw_battle_data/master/dat
 x2<-gsub(",", "", x, fixed = TRUE)
 force<- data.frame(unlist(yaml.load(x2 )))
 force$rn<-rownames(force) 
-force$bat<-substr(force$rn,1,5)
+force$battle<-substr(force$rn,1,5)
 
 stren<-subset(force, grepl("stren",force$rn))
-colnames(stren)<-c("num", "cat", "bat")
+colnames(stren)<-c("num", "cat", "battle")
+stren$num<-as.numeric(stren$num)
 
 
 for (i in 1:nrow(stren)) {
-	stren[i,]$cat<-gsub(stren[i,]$bat, "", stren[i,]$cat )
+	stren[i,]$cat<-gsub(stren[i,]$battle, "", stren[i,]$cat )
 }
 
-stren$cat<-ifelse(stren$cat==".CS.strength", "CS_strength", stren$cat) 
-stren$cat<-ifelse(stren$cat==".CS.strength_max", "CS_strength.u", stren$cat) 
-stren$cat<-ifelse(stren$cat==".CS.strength_min", "CS_strength.l", stren$cat)  
+stren$cat<-ifelse(stren$cat==".CS.strength", "c_strength", stren$cat) 
+stren$cat<-ifelse(stren$cat==".CS.strength_max", "c_strength.u", stren$cat) 
+stren$cat<-ifelse(stren$cat==".CS.strength_min", "c_strength.l", stren$cat)  
 stren$cat<-ifelse(stren$cat==".I.strength_max", "I_strength.u", stren$cat)  
 stren$cat<-ifelse(stren$cat==".I.strength_min", "I_strength.l", stren$cat)        
-stren$cat<-ifelse(stren$cat==".strength", "T_strength", stren$cat)     
-stren$cat<-ifelse(stren$cat==".US.strength", "US_strength", stren$cat) 
-stren$cat<-ifelse(stren$cat==".US.strength_max", "US_strength.u", stren$cat) 
-stren$cat<-ifelse(stren$cat==".US.strength_min", "US_strength.l", stren$cat)
+stren$cat<-ifelse(stren$cat==".strength", "t_strength", stren$cat)     
+stren$cat<-ifelse(stren$cat==".US.strength", "u_strength", stren$cat) 
+stren$cat<-ifelse(stren$cat==".US.strength_max", "u_strength.u", stren$cat) 
+stren$cat<-ifelse(stren$cat==".US.strength_min", "u_strength.l", stren$cat)
 
  
 
 
-mdata <- melt(stren, id=c("bat", "cat"), na.rm=TRUE)
+mdata <- melt(stren, id=c("battle", "cat"), na.rm=TRUE)
 
-mdata2 <- cast(mdata, bat~cat)
+mdata2 <- cast(mdata, battle~cat)
+
+civcwsacI<-merge(civcwsac, mdata2, id=battle, all.x=TRUE, all.y=TRUE)
+
+write.csv(civcwsacI, file = "C:\\Stuff\\Bucket\\civcwsacI.csv")
