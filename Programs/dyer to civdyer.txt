@@ -170,4 +170,26 @@ civ$battle1[civ$battle==	5219	]<-	'NC020'
 civ$battle1[civ$battle==	8907	]<-	'VA083'
 civ$battle1[civ$battle==	8966	]<-	'VA088'
 
+civ$battle1[civ$battle==	2018	]<-	'KY008'
+civ$battle1[civ$battle==	2509 	]<-	'LA010'
+civ$battle1[civ$battle==	3402	]<-	'MS011'
+civ$battle1[civ$battle==	3910 	]<-	'MO006'
+civ$battle1[civ$battle==	4974	]<-	'NC004'
+civ$battle1[civ$battle==	5056	]<-	'NC011'
+civ$battle1[civ$battle==	5163	]<-	'NC012'
+civ$battle1[civ$battle==	5378	]<-	'SC007'
+civ$battle1[civ$battle==	5533	]<-	'MO012'
+civ$battle1[civ$battle==	6271	]<-	'TN024'
 
+#  6388 is TN027, TN028, TN029
+
+civ$battle1[civ$battle==	7014	]<-	'VA009'
+civ$battle1[civ$battle==	7671	]<-	'VA031'
+civ$battle1[civ$battle==	7747	]<-	'VA031'
+civ$battle1[civ$battle==	9815	]<-	'WV010'
+
+
+civ$battle1[civ$battle==	7671	]<-	'VA031'
+civ$battle1[civ$battle==	7671	]<-	'VA031'
+
+# 8487     VA  June 16, 1864, to April 2, 1865: Siege operations against Petersburg and Richmond 
