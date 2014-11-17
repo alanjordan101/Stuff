@@ -2,6 +2,10 @@ library(plyr)
 library(RCurl)
 library(yaml)
 library(reshape)
+library(dplyr)
+library(tidyr) 
+library(lubridate) 
+library(stringr)
 
 
 

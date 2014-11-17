@@ -1,0 +1,37 @@
+
+
+R programs should have the file extension .R. Also try to avoid using spaces in file names. 
+
+dplyr
+tidyr 
+lubridate 
+stringr
+
+Rename variables to be standardized. I like your approach, except put cas_(type)_(belligerent).  Where type is all combinations of k (killed), w (wounded), m (missing), and c (prisoner, captured,
+	although maybe use p instead of c to reduce confusion with casualty). And combatant is U or C. e.g. cas_kwm_u is killed + wounded + missing for the Union. And cas_kwmp_u is the total casualties (all
+	types) for the union. Similarly strength variables would be str_(type)_(belligerent).
+
+LivermoreCSV to civliv Prog.txt
+
+For matching the livermore data to CWSAC values create a separate csv with the relationships. This is easier to edit and maintain. Then read the dataset into R using read.csv and merge with the livermore data.
+there's not much you could have done about the special cases that is cleaner than what you did.
+
+try to avoid specifying absolute file paths. It's best to run things as relative paths to a project directory. Then code works when you give it to others, or change machines.
+cwsac.battles.csv to battle_spec.txt
+
+The VA020A and VA020B is an issue. CWSAC changed its mind on it.
+
+btw, the lat / long are hand coded from the maps in the revised CWSAC reports. I then went though and edited Wikipedia for all battle articles so that the lat / long on them were correct.
+
+You didn't need to do all that work for dates :-) If that were the case, I would have put the date column in an easier format. Simply use as.Date(date, format = "%Y-%m-%d")
+
+kennedy1997casualtiestsv to civken.txt
+
+Nice job on the regexes! You're more ambitious than I. I parsed the standard stuff, then dumped it to a csv file to hand edit the rest. I also just updated my csv file to incorporate your changes.
+
+there's also several issues in how battles were labelled in Kennedy. VA112 in kennedy is VA066 in CWSAC. VA031, VA032, and VA038 all incorporate multiple CWSAC battles. While VA075A and VA075B are subbattles of VA075 in cwsac. Yeah, it is a pain in the ass.  Just look at everything in https://github.com/jrnold/acw_battle_data/blob/master/data/kennedy1997/kennedy_to_cwsac.csv in which the relation is not "="
+
+dyer to civdyer.txt
+
+These are also cases where you could store all of those assignments in csv files. I incorporated the issues with events into the original program which creates the csv, so those sould be fixed. I also created a csv file for the relationship to CWSAC. Note what I did for the 
+
